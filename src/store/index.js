@@ -3,18 +3,21 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     charList: [],
-    accWideTasks: []
+    accWideTasks: [],
   },
   getters: {
     getCharList(state) {
       return state.charList;
-
     },
     getAccWideTasks(state) {
       return state.accWideTasks;
-    }
+    },
   },
   mutations: {
+    updateCharList(state, charList) {
+      state.charList = charList;
+      localStorage.setItem("charList", JSON.stringify(charList));
+    },
     addCharList(state, newChar) {
       state.charList.push(newChar);
       localStorage.setItem("charList", JSON.stringify(state.charList));
@@ -40,13 +43,20 @@ export default createStore({
       state.charList[index] = char;
       localStorage.setItem("charList", JSON.stringify(state.charList));
     },
-    updateAccWideTasks(state, index) {
+    deleteAccWideTask(state, index) {
       if (index > -1) {
         state.accWideTasks.splice(index, 1);
-        localStorage.setItem("accWideTasks", JSON.stringify(state.accWideTasks));
+        localStorage.setItem(
+          "accWideTasks",
+          JSON.stringify(state.accWideTasks)
+        );
       }
-    }
+    },
+    updateAccWideTasks(state, task, index) {
+      state.charList[index] = task;
+      localStorage.setItem("accWideTasks", JSON.stringify(state.accWideTasks));
+    },
   },
   actions: {},
-  modules: {}
+  modules: {},
 });
