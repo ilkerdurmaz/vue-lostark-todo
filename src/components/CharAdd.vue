@@ -162,15 +162,43 @@ export default {
       this.routine = "Select Routine";
     },
     updateResetDay() {
-      localStorage.setItem("resetDay", this.resetDay);
+      let date = new Date();
+      let dayDiff = 0;
+      if (this.resetDay > date.getDay()) {
+        dayDiff = Math.abs(this.resetDay - date.getDay());
+      } else {
+        dayDiff = 7 - Math.abs(this.resetDay - date.getDay());
+      }
+      let newDate = new Date(date.getTime() + dayDiff * 86400000);
+      localStorage.setItem("resetDay", JSON.stringify(newDate.getTime()));
     },
     updateResetTime() {
-      localStorage.setItem("resetTime", this.resetTime);
+      let date = new Date();
+      let time = this.resetTime.split(":");
+      let newDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        time[0],
+        time[1]
+      );
+      localStorage.setItem("resetTime", newDate.getTime().toString());
     },
   },
   created() {
-    this.resetDay = localStorage.getItem("resetDay") || 0;
-    this.resetTime = localStorage.getItem("resetTime") || "20:00";
+    this.resetDay = new Date(
+      JSON.parse(localStorage.getItem("resetDay"))
+    ).getDay();
+    this.resetTime =
+      new Date(JSON.parse(localStorage.getItem("resetTime")))
+        .getHours()
+        .toString()
+        .padStart(2, "0") +
+      ":" +
+      new Date(JSON.parse(localStorage.getItem("resetTime")))
+        .getMinutes()
+        .toString()
+        .padStart(2, "0");
   },
 };
 </script>

@@ -16,8 +16,8 @@ export default {
     if (localStorage.length === 0) {
       localStorage.setItem("charList", JSON.stringify([]));
       localStorage.setItem("accWideTasks", JSON.stringify([]));
-      localStorage.setItem("resetDay", JSON.stringify(0));
-      localStorage.setItem("resetTime", "20:00");
+      localStorage.setItem("resetDay", 100000000000);
+      localStorage.setItem("resetTime", 100000000000);
     }
   },
 };

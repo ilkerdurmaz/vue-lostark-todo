@@ -189,27 +189,37 @@ export default {
     this.charList = this.getCharList;
   },
   mounted() {
-    this.$refs.myTab.children[0].click();
+    if (this.$refs.myTab.children.length > 0) {
+      this.$refs.myTab.children[0].click();
+    }
 
-    let date = new Date();
-    if (localStorage.getItem("isToday") === null) {
-      localStorage.setItem("isToday", JSON.stringify(date));
-    } else {
-      let storedDay = new Date(JSON.parse(localStorage.getItem("isToday")));
-      let storedResetTime = localStorage.getItem("resetTime");
-      let resetTime = new Date();
-      resetTime.setHours(storedResetTime.split(":")[0]);
-      resetTime.setMinutes(storedResetTime.split(":")[1]);
+    let now = new Date();
+    let resetTime = new Date(JSON.parse(localStorage.getItem("resetTime")));
+    let resetDay = new Date(JSON.parse(localStorage.getItem("resetDay")));
 
-      if (date.getDay() !== storedDay.getDay() && date >= resetTime) {
-        console.log("resetlendi");
-        localStorage.setItem("isToday", JSON.stringify(date));
+    if (now > resetTime) {
+      this.charList.forEach((char) => {
+        char.dailyTasks.forEach((task) => {
+          task.isDone = false;
+        });
+      });
+      this.updateCharList(this.charList);
+      localStorage.setItem(
+        "resetTime",
+        JSON.stringify(resetTime.getTime() + 86400000)
+      );
+
+      if (now > resetDay) {
         this.charList.forEach((char) => {
-          char.dailyTasks.forEach((task) => {
+          char.weeklyTasks.forEach((task) => {
             task.isDone = false;
           });
-          this.updateCharList(this.charList);
         });
+        this.updateCharList(this.charList);
+        localStorage.setItem(
+          "resetDay",
+          JSON.stringify(resetDay.getTime() + 604800000)
+        );
       }
     }
   },
