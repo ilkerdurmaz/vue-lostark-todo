@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <div class="row justify-content-center">
-      <div class="col-5 card m-2 border-5 p-2">
-        <div class="card-header">Character List</div>
+      <div class="col-12 col-md-5 card m-2 border-5  p-2 border-secondary bg-dark text-light">
+        <div class="card-header border-secondary mb-1">Character List</div>
         <nav>
-          <div class="nav nav-tabs" id="nav-tab" ref="myTab">
+          <div class="nav nav-tabs border-bottom-0" id="nav-tab" ref="myTab">
             <button
               v-for="(char, index) in charList"
               :key="char.charName"
-              class="nav-link"
+              class="nav-link bg-dark text-light"
               id="nav-home-tab"
               data-bs-toggle="tab"
               :data-bs-target="'#tab' + index"
@@ -27,10 +27,10 @@
             :id="'tab' + index"
           >
             <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
+              <div class="accordion-item border-secondary ">
                 <h2 class="accordion-header" id="headingOne">
                   <button
-                    class="accordion-button"
+                    class="accordion-button bg-dark text-light border-secondary "
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseOne"
@@ -40,14 +40,14 @@
                 </h2>
                 <div
                   id="collapseOne"
-                  class="accordion-collapse collapse show"
+                  class="accordion-collapse collapse show  bg-dark text-light"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body">
-                    <div class="list-group">
+                  <div class="accordion-body ">
+                    <div class="list-group ">
                       <button
                         type="button"
-                        class="list-group-item list-group-item-action"
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary"
                         v-for="(task, index) in char.dailyTasks"
                         :key="task"
                         @click="
@@ -74,10 +74,10 @@
                 </div>
               </div>
 
-              <div class="accordion-item">
+              <div class="accordion-item border-secondary">
                 <h2 class="accordion-header" id="headingTwo">
                   <button
-                    class="accordion-button collapsed"
+                    class="accordion-button collapsed bg-dark text-light border-secondary"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseTwo"
@@ -90,11 +90,11 @@
                   class="accordion-collapse collapse"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body">
+                  <div class="accordion-body bg-dark text-light border-secondary">
                     <div class="list-group">
                       <button
                         type="button"
-                        class="list-group-item list-group-item-action"
+                        class="list-group-item list-group-item-action bg-dark text-light border-secondary"
                         v-for="(task, index) in char.weeklyTasks"
                         :key="task"
                         @click="
@@ -121,18 +121,19 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-danger w-100 mt-5" @click="deleteChar(char)">
+            <button class="btn btn-outline-danger w-100 mt-5" @click="deleteChar(char)">
               DELETE CHARACTER
             </button>
           </div>
         </div>
       </div>
-      <div class="col-5 card m-2 border-5 p-2">
+
+      <div class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light p-2">
         <div class="card-header">Account-Wide Tasks</div>
         <div class="list-group">
           <button
             type="button"
-            class="list-group-item list-group-item-action"
+            class="list-group-item list-group-item-action bg-dark text-light border-secondary"
             v-for="(task, index) in getAccWideTasks"
             :key="task"
             @click="
@@ -198,6 +199,7 @@ export default {
     let resetDay = new Date(JSON.parse(localStorage.getItem("resetDay")));
 
     if (now > resetTime) {
+      console.log("day reset");
       this.charList.forEach((char) => {
         char.dailyTasks.forEach((task) => {
           task.isDone = false;
@@ -210,6 +212,7 @@ export default {
       );
 
       if (now > resetDay) {
+        console.log("week reset");
         this.charList.forEach((char) => {
           char.weeklyTasks.forEach((task) => {
             task.isDone = false;
@@ -226,4 +229,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

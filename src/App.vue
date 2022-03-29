@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-dark min-vh-100" >
     <header-comp></header-comp>
     <router-view></router-view>
   </div>
@@ -14,11 +14,16 @@ export default {
   },
   beforeCreate() {
     if (localStorage.length === 0) {
+      console.log("No local storage");
       localStorage.setItem("charList", JSON.stringify([]));
       localStorage.setItem("accWideTasks", JSON.stringify([]));
-      localStorage.setItem("resetDay", 100000000000);
-      localStorage.setItem("resetTime", 100000000000);
+      localStorage.setItem("resetDay", Date.now().toString());
+      localStorage.setItem("resetTime", Date.now().toString());
     }
+    else if (localStorage.getItem("resetTime")==="NaN"||localStorage.getItem("resetTime")===null) {
+      localStorage.setItem("resetTime", Date.now().toString());
+    }
+
   },
 };
 </script>
