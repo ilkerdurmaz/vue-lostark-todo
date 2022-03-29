@@ -1,29 +1,3 @@
-# vue-lostark-todo
+# Lost Ark (MMORPG) To-Do List with Daily and Weekly Reset Feature
 
-## Project setup
-
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+https://ilkerdurmaz.github.io/vue-lostark-todo/
