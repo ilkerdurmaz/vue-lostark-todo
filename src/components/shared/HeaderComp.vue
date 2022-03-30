@@ -1,6 +1,8 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary border-3 rounded">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary border-3 rounded"
+    >
       <div class="container-fluid">
         <router-link custom to="/" v-slot="{ navigate }">
           <a class="navbar-brand" @click="navigate">
@@ -46,7 +48,7 @@
                   :class="{ active: isActive, 'nav-link': true }"
                   @click="navigate"
                   role="button"
-                  >Character Add</a
+                  >Adding Character and Task</a
                 >
               </router-link>
             </li>

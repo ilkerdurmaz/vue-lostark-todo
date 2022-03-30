@@ -1,8 +1,13 @@
 <template>
-  <div class="container" >
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-5 card m-2 border-5  p-2 border-secondary bg-dark text-light">
+      <div
+        class="col-12 col-md-5 card m-2 border-5 p-2 border-secondary bg-dark text-light"
+      >
         <div class="card-header border-secondary mb-1">Character List</div>
+        <div class="card-body" v-if="charList.length <= 0">
+          <h5 class="text-warning">You don't have any character.</h5>
+        </div>
         <nav>
           <div class="nav nav-tabs border-bottom-0" id="nav-tab" ref="myTab">
             <button
@@ -27,10 +32,10 @@
             :id="'tab' + index"
           >
             <div class="accordion" id="accordionExample">
-              <div class="accordion-item border-secondary ">
+              <div class="accordion-item border-secondary">
                 <h2 class="accordion-header" id="headingOne">
                   <button
-                    class="accordion-button bg-dark text-light border-secondary "
+                    class="accordion-button bg-dark text-light border-secondary"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseOne"
@@ -40,11 +45,11 @@
                 </h2>
                 <div
                   id="collapseOne"
-                  class="accordion-collapse collapse show  bg-dark text-light"
+                  class="accordion-collapse collapse show bg-dark text-light"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body ">
-                    <div class="list-group ">
+                  <div class="accordion-body">
+                    <div class="list-group">
                       <button
                         type="button"
                         class="list-group-item list-group-item-action bg-dark text-light border-secondary"
@@ -56,7 +61,7 @@
                         "
                       >
                         <span
-                          class="badge bg-primary"
+                          class="badge bg-primary text-dark"
                           :class="{ 'bg-warning': !task.isDone }"
                           >{{ index + 1 }}
                         </span>
@@ -90,7 +95,9 @@
                   class="accordion-collapse collapse"
                   data-bs-parent="#accordionExample"
                 >
-                  <div class="accordion-body bg-dark text-light border-secondary">
+                  <div
+                    class="accordion-body bg-dark text-light border-secondary"
+                  >
                     <div class="list-group">
                       <button
                         type="button"
@@ -103,7 +110,7 @@
                         "
                       >
                         <span
-                          class="badge bg-primary"
+                          class="badge bg-primary text-dark"
                           :class="{ 'bg-warning': !task.isDone }"
                           >{{ index + 1 }}
                         </span>
@@ -121,16 +128,24 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-outline-danger w-100 mt-5" @click="deleteChar(char)">
+            <button
+              class="btn btn-outline-danger w-100 mt-5"
+              @click="deleteChar(char)"
+            >
               DELETE CHARACTER
             </button>
           </div>
         </div>
       </div>
 
-      <div class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light p-2">
-        <div class="card-header">Account-Wide Tasks</div>
-        <div class="list-group">
+      <div
+        class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light p-2"
+      >
+        <div class="card-header border-secondary">Account-Wide Tasks</div>
+        <div class="card-body" v-if="getAccWideTasks.length <= 0">
+          <h5 class="text-warning">You don't have any account-wide task.</h5>
+        </div>
+        <div class="list-group" v-else>
           <button
             type="button"
             class="list-group-item list-group-item-action bg-dark text-light border-secondary"
@@ -229,6 +244,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

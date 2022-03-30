@@ -1,11 +1,15 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light">
+      <div
+        class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light"
+      >
         <div class="card-body">
           <h5 class="card-title mb-3">Character Adding</h5>
           <div class="input-group">
-            <span class="input-group-text bg-secondary text-light">Character Name</span>
+            <span class="input-group-text bg-secondary text-light"
+              >Character Name</span
+            >
             <input
               type="text"
               class="form-control bg-dark text-light"
@@ -17,21 +21,43 @@
           <h5 class="card-title mb-3">Task Adding</h5>
           <div class="input-group mb-3">
             <span class="input-group-text bg-secondary text-light">Task</span>
-            <input type="text" class="form-control bg-dark text-light" v-model="taskName" placeholder="enter task"/>
-            <select class="form-select bg-secondary text-light" v-model="routine">
+            <input
+              type="text"
+              class="form-control bg-dark text-light"
+              v-model="taskName"
+              placeholder="enter task"
+            />
+            <select
+              class="form-select bg-secondary text-light"
+              v-model="routine"
+            >
               <option disabled>Select Routine</option>
               <option>Daily</option>
               <option>Weekly</option>
               <option>Account-Wide</option>
             </select>
           </div>
-          <button class="btn btn-outline-primary w-100" @click="addTask" :disabled="!(taskName.length>0&&routine!=='Select Routine')">ADD TASK</button>
+          <button
+            class="btn btn-outline-primary w-100"
+            @click="addTask"
+            :disabled="!(taskName.length > 0 && routine !== 'Select Routine')"
+          >
+            ADD TASK
+          </button>
           <hr />
-          <button class="btn btn-outline-danger w-100" @click="charSave" :disabled="!saveEnabler">SAVE</button>
+          <button
+            class="btn btn-outline-danger w-100"
+            @click="charSave"
+            :disabled="!saveEnabler"
+          >
+            SAVE
+          </button>
           <hr />
           <h5 class="card-title mb-3">Reset Time Select</h5>
           <div class="input-group mb-3">
-            <span class="input-group-text bg-secondary text-light">Daily Tasks Reset Time</span>
+            <span class="input-group-text bg-secondary text-light"
+              >Daily Tasks Reset Time</span
+            >
             <input
               type="time"
               class="form-control bg-dark text-light"
@@ -41,7 +67,9 @@
             />
           </div>
           <div class="input-group mb-3">
-            <span class="input-group-text bg-secondary text-light">Weekly Tasks Reset Day</span>
+            <span class="input-group-text bg-secondary text-light"
+              >Weekly Tasks Reset Day</span
+            >
             <select
               class="form-select bg-dark text-light"
               v-model="resetDay"
@@ -59,42 +87,67 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light">
+      <div
+        class="col-12 col-md-5 card m-2 border-5 border-secondary bg-dark text-light"
+      >
         <div class="card-body">
-          <h5 class="card-title mb-3">Daily Tasks</h5>
-          <hr />
-          <ul
-            class="list-group"
-            v-for="(task, index) in newChar.dailyTasks"
-            :key="task"
+          <h5
+            class="card-title text-light"
+            v-if="newChar.dailyTasks.length > 0"
           >
-            <li class="list-group-item bg-secondary text-light">
+            Daily Task List
+          </h5>
+          <h5 class="card-title text-warning" v-else>
+            You don't have any daily task.
+          </h5>
+          <hr />
+
+          <ul class="list-group">
+            <li
+              class="list-group-item bg-secondary text-light"
+              v-for="(task, index) in newChar.dailyTasks"
+              :key="task"
+            >
               {{ task.task }}
               <button
                 class="btn-close border border-2 border-danger float-end"
                 @click="newChar.dailyTasks.splice(index, 1)"
-              >
-              </button>
+              ></button>
             </li>
           </ul>
-          <h5 class="card-title mb-3">Weekly Tasks</h5>
-          <hr />
-          <ul
-            class="list-group"
-            v-for="(task, index) in newChar.weeklyTasks"
-            :key="task"
+          <h5
+            class="card-title text-light"
+            v-if="newChar.weeklyTasks.length > 0"
           >
-            <li class="list-group-item bg-secondary text-light">
+            Weekly Task List
+          </h5>
+          <h5 class="card-title text-warning" v-else>
+            You don't have any weekly task.
+          </h5>
+          <hr />
+
+          <ul class="list-group">
+            <li
+              class="list-group-item bg-secondary text-light"
+              v-for="(task, index) in newChar.weeklyTasks"
+              :key="task"
+            >
               {{ task.task }}
               <button
                 class="btn-close border border-2 border-danger float-end"
                 @click="newChar.weeklyTasks.splice(index, 1)"
-              >
-              </button>
+              ></button>
             </li>
           </ul>
-          <h5 class="card-title mb-3">Account-Wide Tasks</h5>
+
+          <h5 class="card-title text-light" v-if="getAccWideTasks.length > 0">
+            Account-Wide Task List
+          </h5>
+          <h5 class="card-title text-warning" v-else>
+            You don't have any acc-wide task.
+          </h5>
           <hr />
+
           <ul class="list-group">
             <li
               class="list-group-item bg-secondary text-light"
@@ -105,8 +158,7 @@
               <button
                 class="btn-close border border-2 border-danger float-end"
                 @click="deleteAccWideTask(index)"
-              >
-              </button>
+              ></button>
             </li>
           </ul>
         </div>
@@ -136,10 +188,13 @@ export default {
   },
   computed: {
     ...mapGetters(["getAccWideTasks"]),
-    saveEnabler(){
-      return this.newChar.charName && (this.newChar.dailyTasks.length > 0 || this.newChar.weeklyTasks.length > 0);
-
-    }
+    saveEnabler() {
+      return (
+        this.newChar.charName &&
+        (this.newChar.dailyTasks.length > 0 ||
+          this.newChar.weeklyTasks.length > 0)
+      );
+    },
   },
   methods: {
     ...mapMutations(["addCharList", "addAccWideTasks", "deleteAccWideTask"]),
@@ -174,7 +229,7 @@ export default {
       localStorage.setItem("resetDay", JSON.stringify(newDate.getTime()));
     },
     updateResetTime() {
-      if(this.resetTime.length === 5){
+      if (this.resetTime.length === 5) {
         let date = new Date();
         let time = this.resetTime.split(":");
         let newDate = new Date(
