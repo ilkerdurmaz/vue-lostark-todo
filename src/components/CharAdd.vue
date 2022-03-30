@@ -170,6 +170,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
+import router from "@/router";
 
 export default {
   name: "CharAdd",
@@ -216,6 +217,7 @@ export default {
       };
       this.taskName = "";
       this.routine = "Select Routine";
+      router.replace("/");
     },
     updateResetDay() {
       let date = new Date();
