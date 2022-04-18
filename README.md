@@ -1,7 +1,7 @@
 # Lost Ark To-Do Application
 ### Lost Ark (MMORPG) To-Do List Application with Daily and Weekly Reset Feature, Built with Vue.Js and Bootstrap.
 
-**It resets the marked tasks at the predetermined time daily and on the specified day weekly.**
+**It resets the marked tasks at the specified time daily and on the specified day weekly.**
 
 ## [DEMO](https://ilkerdurmaz.github.io/vue-lostark-todo/)
 
